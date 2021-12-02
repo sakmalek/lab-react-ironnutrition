@@ -7,7 +7,7 @@ import Search from "./components/Search";
 
 function App() {
     const [foodBoxes, setFoodBoxes] = useState(foods);
-    const [filteredFoodBoxes, setFilteredFoodBoxes] = useState(foods);
+    const [filteredFoodBoxes, setFilteredFoodBoxes] = useState(foodBoxes);
 
     const addForm = (o) => {
         setFoodBoxes(foodBoxes => [o, ...foodBoxes]);
@@ -19,6 +19,12 @@ function App() {
             || foodBoxes
         setFilteredFoodBoxes(filtered)
     }
+    const deleteByKey = (key) => {
+
+        const updatedFoods = foodBoxes.filter((food, index) => index !== key)
+        setFoodBoxes(updatedFoods)
+        setFilteredFoodBoxes(updatedFoods)
+    }
 
 
     return <div className="App">
@@ -28,7 +34,7 @@ function App() {
         <div className="foodboxes">
             {filteredFoodBoxes.map((food, index) => {
                 return <div key={index} className="food-wrapper">
-                    <FoodBox food={food}/>
+                    <FoodBox food={food} id={index} deleteByKey={deleteByKey}/>
                 </div>
             })}
         </div>
